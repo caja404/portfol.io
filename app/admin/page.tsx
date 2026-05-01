@@ -57,15 +57,7 @@ export default async function AdminDashboard() {
           <Link
             key={href}
             href={href}
-            style={{ ...card, display: 'block', textDecoration: 'none', transition: 'border-color 0.15s ease, box-shadow 0.15s ease' }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = '#C4603A';
-              (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 10px rgba(196,96,58,0.08)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = '#ebebeb';
-              (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-            }}
+            style={{ ...card, display: 'block', textDecoration: 'none' }}
           >
             <p style={{ fontSize: '0.85rem', fontWeight: 600, color: '#111', marginBottom: 4 }}>{label}</p>
             <p style={{ fontSize: '0.72rem', color: '#bbb' }}>{sub}</p>

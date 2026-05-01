@@ -77,7 +77,6 @@ export default function AdminSidebar() {
                 background: isActive ? 'rgba(196,96,58,0.06)' : 'transparent',
                 borderLeft: `2px solid ${isActive ? '#C4603A' : 'transparent'}`,
                 textDecoration: 'none',
-                transition: 'color 0.12s ease, background 0.12s ease',
               }}
             >
               {item.label}
@@ -117,12 +116,6 @@ export default function AdminSidebar() {
             cursor: 'pointer',
             padding: 0,
             fontFamily: 'inherit',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = '#111';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = '#bbb';
           }}
         >
           Log out

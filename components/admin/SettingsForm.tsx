@@ -16,7 +16,6 @@ const inputStyle: React.CSSProperties = {
   color: '#111',
   background: 'transparent',
   outline: 'none',
-  transition: 'border-color 0.2s',
   fontFamily: 'inherit',
 };
 
@@ -111,8 +110,6 @@ export default function SettingsForm({ initial }: SettingsFormProps) {
                         value={values[field.key] || ''}
                         onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
                         style={{ ...inputStyle, resize: 'none' }}
-                        onFocus={(e) => { e.currentTarget.style.borderBottomColor = '#C4603A'; }}
-                        onBlur={(e) => { e.currentTarget.style.borderBottomColor = '#e0e0e0'; }}
                       />
                     ) : (
                       <input
@@ -120,8 +117,6 @@ export default function SettingsForm({ initial }: SettingsFormProps) {
                         value={values[field.key] || ''}
                         onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
                         style={inputStyle}
-                        onFocus={(e) => { e.currentTarget.style.borderBottomColor = '#C4603A'; }}
-                        onBlur={(e) => { e.currentTarget.style.borderBottomColor = '#e0e0e0'; }}
                       />
                     )}
                   </div>
