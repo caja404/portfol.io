@@ -21,7 +21,10 @@ export default function Gallery({ items }: GalleryProps) {
   return (
     <section id="gallery" className="py-24 bg-zinc-50">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-xs tracking-widest uppercase text-zinc-400 mb-12">Gallery</h2>
+        <div className="flex items-center gap-4 mb-12">
+          <span className="w-8 h-px bg-zinc-300" />
+          <h2 className="text-xs tracking-widest uppercase text-zinc-400">Gallery</h2>
+        </div>
         {items.length === 0 ? (
           <p className="text-zinc-400 text-sm">No gallery items published yet.</p>
         ) : (

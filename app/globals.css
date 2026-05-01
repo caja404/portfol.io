@@ -20,3 +20,13 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #18181b;
+  color: #ffffff;
+}

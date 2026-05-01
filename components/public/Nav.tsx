@@ -27,8 +27,8 @@ export default function Nav({ ownerName }: NavProps) {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-200',
-        scrolled ? 'bg-white/95 backdrop-blur-sm border-b border-zinc-200' : 'bg-transparent'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b',
+        scrolled ? 'bg-white/95 backdrop-blur-sm border-zinc-200' : 'border-transparent'
       )}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">

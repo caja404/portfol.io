@@ -53,9 +53,10 @@ export default async function HomePage() {
           linkedin={settings.linkedin}
         />
       </main>
-      <footer className="py-8 border-t border-zinc-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <p className="text-xs text-zinc-400">&copy; {new Date().getFullYear()} {settings.owner_name}</p>
+      <footer className="py-10 bg-zinc-900">
+        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+          <p className="text-xs text-zinc-500">&copy; {new Date().getFullYear()} {settings.owner_name}</p>
+          <p className="text-xs text-zinc-600 uppercase tracking-widest">Portfolio</p>
         </div>
       </footer>
     </>

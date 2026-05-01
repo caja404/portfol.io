@@ -7,7 +7,10 @@ export default function About({ bio, email }: AboutProps) {
   return (
     <section id="about" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-xs tracking-widest uppercase text-zinc-400 mb-12">About</h2>
+        <div className="flex items-center gap-4 mb-12">
+          <span className="w-8 h-px bg-zinc-300" />
+          <h2 className="text-xs tracking-widest uppercase text-zinc-400">About</h2>
+        </div>
         <div className="max-w-2xl">
           <p className="text-zinc-700 leading-relaxed text-lg whitespace-pre-line mb-10">{bio}</p>
           <a

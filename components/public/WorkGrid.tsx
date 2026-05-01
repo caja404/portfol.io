@@ -9,7 +9,10 @@ export default function WorkGrid({ items }: WorkGridProps) {
   return (
     <section id="work" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-xs tracking-widest uppercase text-zinc-400 mb-12">Work</h2>
+        <div className="flex items-center gap-4 mb-12">
+          <span className="w-8 h-px bg-zinc-300" />
+          <h2 className="text-xs tracking-widest uppercase text-zinc-400">Work</h2>
+        </div>
         {items.length === 0 ? (
           <p className="text-zinc-400 text-sm">No work items published yet.</p>
         ) : (
