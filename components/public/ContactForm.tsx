@@ -8,6 +8,48 @@ interface ContactFormProps {
   linkedin?: string;
 }
 
+function FloatField({
+  label,
+  type = 'text',
+  value,
+  onChange,
+  rows,
+}: {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (v: string) => void;
+  rows?: number;
+}) {
+  return (
+    <div className="field">
+      {rows ? (
+        <>
+          <textarea
+            rows={rows}
+            placeholder=" "
+            required
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          <label>{label}</label>
+        </>
+      ) : (
+        <>
+          <input
+            type={type}
+            placeholder=" "
+            required
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          <label>{label}</label>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function ContactForm({ instagram, behance, linkedin }: ContactFormProps) {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -35,72 +77,84 @@ export default function ContactForm({ instagram, behance, linkedin }: ContactFor
   ].filter((s) => s.href);
 
   return (
-    <section id="contact" className="py-24 bg-zinc-50">
+    <section id="contact" className="py-24" style={{ background: 'var(--cream)' }}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center gap-4 mb-12">
-          <span className="w-8 h-px bg-zinc-300" />
-          <h2 className="text-xs tracking-widest uppercase text-zinc-400">Contact</h2>
+        <div className="flex items-center gap-5 mb-16">
+          <svg width="44" height="2" viewBox="0 0 44 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="1" x2="44" y2="1" stroke="#C4603A" strokeWidth="1" strokeDasharray="5 3"/>
+          </svg>
+          <h2
+            className="text-[0.58rem] tracking-[0.32em] uppercase"
+            style={{ color: 'rgba(26,20,16,0.38)' }}
+          >
+            Contact
+          </h2>
         </div>
+
         <div className="max-w-lg">
           {status === 'success' ? (
-            <p className="text-zinc-900 text-sm border border-zinc-200 px-4 py-3">
-              Message sent. I will get back to you soon.
+            <p
+              className="border-l-2 border-[#C4603A] pl-4 py-1"
+              style={{
+                fontFamily: 'var(--font-cormorant, Georgia), serif',
+                fontStyle: 'italic',
+                fontSize: '1.15rem',
+                color: 'rgba(26,20,16,0.65)',
+              }}
+            >
+              Message received. I will be in touch soon.
             </p>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs text-zinc-500 mb-1">Name</label>
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:border-zinc-900 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-zinc-500 mb-1">Email</label>
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:border-zinc-900 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-zinc-500 mb-1">Message</label>
-                <textarea
-                  required
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:border-zinc-900 transition-colors resize-none"
-                />
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <FloatField
+                label="Name"
+                value={form.name}
+                onChange={(v) => setForm({ ...form, name: v })}
+              />
+              <FloatField
+                label="Email"
+                type="email"
+                value={form.email}
+                onChange={(v) => setForm({ ...form, email: v })}
+              />
+              <FloatField
+                label="Message"
+                value={form.message}
+                onChange={(v) => setForm({ ...form, message: v })}
+                rows={4}
+              />
               {status === 'error' && (
-                <p className="text-xs text-red-600">Something went wrong. Please try again.</p>
+                <p className="text-[0.65rem] tracking-wide" style={{ color: 'var(--terracotta)' }}>
+                  Something went wrong. Please try again.
+                </p>
               )}
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="border border-zinc-900 text-zinc-900 text-sm px-6 py-2 hover:bg-zinc-900 hover:text-white transition-colors disabled:opacity-50"
+                className="w-full md:w-auto text-[0.62rem] tracking-[0.2em] uppercase px-10 py-4 rounded-[2px] hover:scale-[1.02] transition-transform duration-200 disabled:opacity-50"
+                style={{ background: 'var(--terracotta)', color: 'var(--cream)' }}
               >
                 {status === 'loading' ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           )}
+
           {socials.length > 0 && (
-            <div className="mt-12 flex gap-6">
+            <div className="mt-14 flex gap-8">
               {socials.map((s) => (
                 <a
                   key={s.label}
                   href={s.href!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-zinc-500 hover:text-zinc-900 transition-colors uppercase tracking-widest"
+                  className="group relative text-[0.58rem] tracking-[0.22em] uppercase"
+                  style={{ color: 'rgba(26,20,16,0.38)' }}
                 >
                   {s.label}
+                  <span
+                    className="absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                    style={{ background: 'var(--terracotta)' }}
+                  />
                 </a>
               ))}
             </div>

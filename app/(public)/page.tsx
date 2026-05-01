@@ -43,6 +43,7 @@ export default async function HomePage() {
           name={settings.owner_name || 'Your Name'}
           tagline={settings.tagline || ''}
           bio={settings.bio_short || ''}
+          heroLabel={settings.hero_label}
         />
         <WorkGrid items={workItems} />
         <Gallery items={galleryItems} />
@@ -53,10 +54,37 @@ export default async function HomePage() {
           linkedin={settings.linkedin}
         />
       </main>
-      <footer className="py-10 bg-zinc-900">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <p className="text-xs text-zinc-500">&copy; {new Date().getFullYear()} {settings.owner_name}</p>
-          <p className="text-xs text-zinc-600 uppercase tracking-widest">Portfolio</p>
+      <footer className="py-16 relative overflow-hidden" style={{ background: 'var(--ink)' }}>
+        {/* Watermark initials */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+          aria-hidden
+        >
+          <span
+            className="leading-none"
+            style={{
+              fontFamily: 'var(--font-cormorant, Georgia), serif',
+              fontWeight: 700,
+              fontSize: 'clamp(8rem, 22vw, 18rem)',
+              color: 'rgba(255,255,255,0.03)',
+            }}
+          >
+            {(settings.owner_name || '').split(' ').map((w: string) => w[0]).join('')}
+          </span>
+        </div>
+        <div className="relative max-w-6xl mx-auto px-6 flex items-center justify-between">
+          <p
+            className="text-[0.6rem] tracking-[0.18em]"
+            style={{ color: 'rgba(245,240,232,0.28)' }}
+          >
+            &copy; {new Date().getFullYear()} {settings.owner_name}
+          </p>
+          <p
+            className="text-[0.6rem] italic"
+            style={{ fontFamily: 'var(--font-cormorant, Georgia), serif', color: 'rgba(245,240,232,0.18)' }}
+          >
+            Portfolio
+          </p>
         </div>
       </footer>
     </>

@@ -7,15 +7,66 @@ interface SettingsFormProps {
   initial: Record<string, string>;
 }
 
-const FIELDS = [
-  { key: 'owner_name', label: 'Display Name' },
-  { key: 'tagline', label: 'Tagline' },
-  { key: 'bio_short', label: 'Short Bio (Hero)' },
-  { key: 'bio_long', label: 'Long Bio (About page)', multiline: true },
-  { key: 'email', label: 'Contact Email' },
-  { key: 'instagram', label: 'Instagram Username' },
-  { key: 'behance', label: 'Behance Username' },
-  { key: 'linkedin', label: 'LinkedIn Username' },
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  border: 'none',
+  borderBottom: '1px solid #e0e0e0',
+  padding: '6px 0 8px',
+  fontSize: '0.88rem',
+  color: '#111',
+  background: 'transparent',
+  outline: 'none',
+  transition: 'border-color 0.2s',
+  fontFamily: 'inherit',
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: '0.62rem',
+  letterSpacing: '0.14em',
+  textTransform: 'uppercase',
+  color: '#aaa',
+  marginBottom: 4,
+};
+
+const sectionHeadingStyle: React.CSSProperties = {
+  fontSize: '0.62rem',
+  letterSpacing: '0.2em',
+  textTransform: 'uppercase',
+  color: '#C4603A',
+  fontWeight: 600,
+  marginBottom: 16,
+  paddingBottom: 8,
+  borderBottom: '1px solid #f0f0f0',
+};
+
+const FIELD_GROUPS = [
+  {
+    heading: 'Identity',
+    fields: [
+      { key: 'owner_name', label: 'Your Name' },
+      { key: 'hero_label', label: 'Hero Label (small text above name)' },
+      { key: 'tagline', label: 'Tagline / Role' },
+    ],
+  },
+  {
+    heading: 'Bio',
+    fields: [
+      { key: 'bio_short', label: 'Short Bio (shown in Hero section)' },
+      { key: 'bio_long', label: 'Long Bio (shown in About section)', multiline: true },
+    ],
+  },
+  {
+    heading: 'Contact & Social',
+    fields: [
+      { key: 'email', label: 'Email Address' },
+      { key: 'instagram', label: 'Instagram Username' },
+      { key: 'behance', label: 'Behance Username' },
+      { key: 'linkedin', label: 'LinkedIn (e.g. in/yourname)' },
+      { key: 'twitter', label: 'Twitter / X Username' },
+      { key: 'dribbble', label: 'Dribbble Username' },
+    ],
+  },
 ];
 
 export default function SettingsForm({ initial }: SettingsFormProps) {
@@ -39,34 +90,69 @@ export default function SettingsForm({ initial }: SettingsFormProps) {
   };
 
   return (
-    <form onSubmit={handleSave} className="space-y-5 max-w-lg">
-      {FIELDS.map((field) => (
-        <div key={field.key}>
-          <label className="block text-xs text-zinc-500 mb-1">{field.label}</label>
-          {field.multiline ? (
-            <textarea
-              rows={4}
-              value={values[field.key] || ''}
-              onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
-              className="w-full border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:border-zinc-900 transition-colors resize-none"
-            />
-          ) : (
-            <input
-              type="text"
-              value={values[field.key] || ''}
-              onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
-              className="w-full border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:border-zinc-900 transition-colors"
-            />
-          )}
+    <div>
+      <div style={{ marginBottom: 28 }}>
+        <h1 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#111', letterSpacing: '-0.02em', marginBottom: 5 }}>Site Settings</h1>
+        <p style={{ fontSize: '0.82rem', color: '#999' }}>These values appear on your public portfolio page.</p>
+      </div>
+
+      <form onSubmit={handleSave}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 36, maxWidth: 560 }}>
+          {FIELD_GROUPS.map((group) => (
+            <div key={group.heading}>
+              <p style={sectionHeadingStyle}>{group.heading}</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                {group.fields.map((field) => (
+                  <div key={field.key}>
+                    <label style={labelStyle}>{field.label}</label>
+                    {field.multiline ? (
+                      <textarea
+                        rows={4}
+                        value={values[field.key] || ''}
+                        onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
+                        style={{ ...inputStyle, resize: 'none' }}
+                        onFocus={(e) => { e.currentTarget.style.borderBottomColor = '#C4603A'; }}
+                        onBlur={(e) => { e.currentTarget.style.borderBottomColor = '#e0e0e0'; }}
+                      />
+                    ) : (
+                      <input
+                        type="text"
+                        value={values[field.key] || ''}
+                        onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
+                        style={inputStyle}
+                        onFocus={(e) => { e.currentTarget.style.borderBottomColor = '#C4603A'; }}
+                        onBlur={(e) => { e.currentTarget.style.borderBottomColor = '#e0e0e0'; }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            disabled={saving}
+            style={{
+              alignSelf: 'flex-start',
+              background: saving ? '#ddd' : '#C4603A',
+              color: '#fff',
+              border: 'none',
+              padding: '10px 28px',
+              fontSize: '0.78rem',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              fontFamily: 'inherit',
+              fontWeight: 500,
+              cursor: saving ? 'not-allowed' : 'pointer',
+              borderRadius: 4,
+              transition: 'background 0.2s',
+            }}
+          >
+            {saving ? 'Saving…' : 'Save Settings'}
+          </button>
         </div>
-      ))}
-      <button
-        type="submit"
-        disabled={saving}
-        className="border border-zinc-900 text-zinc-900 text-sm px-6 py-2.5 hover:bg-zinc-900 hover:text-white transition-colors disabled:opacity-50"
-      >
-        {saving ? 'Saving...' : 'Save Settings'}
-      </button>
-    </form>
+      </form>
+    </div>
   );
 }
